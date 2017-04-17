@@ -30,3 +30,7 @@
 
 # Project files
 build/**
+/bin/
+.project
+CMakeLists.txt.user
+
