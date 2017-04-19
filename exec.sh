@@ -2,11 +2,13 @@
 
 echo deleting build/*
 rm -rf build
+echo deleting bin/*
+rm -rf bin
 
-mkdir -p build/unix
+mkdir build
 
-cd build/unix
-cmake -G "Unix Makefiles" ../..
+cd build
+cmake ..
 make
-
-./bin/sudoku_test
+cd test
+ctest

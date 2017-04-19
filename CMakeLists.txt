@@ -1,15 +1,40 @@
-cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.5)
 
-project(Sudoku-Solver)
+# Definitions
+set(PROJECT_NAME_STR sudoku)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/bin")
 
-set(CMAKE_SOURCE_DIR src)
-set(CMAKE_BINARY_DIR bin)
-set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR})
-set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR})
+# Project title and define versioning
+project(${PROJECT_NAME_STR})
 
-set(TEST_DIR test)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
 
-add_executable(sudoku-solver ${CMAKE_SOURCE_DIR}/main.cpp ${CMAKE_SOURCE_DIR}/backtrackingtree.cpp ${CMAKE_SOURCE_DIR}/sudoku.cpp)
+# Include paths
+set(SUDOKU_INCLUDES ${SUDOKU_INCLUDES} ${PROJECT_SOURCE_DIR}/src)
+set(DEMO_INCLUDES ${DEMO_INCLUDES} ${PROJECT_SOURCE_DIR}/sudoku)
 
-add_executable(sudoku_test ${TEST_DIR}/sudoku_test.cpp ${CMAKE_SOURCE_DIR}/sudoku.cpp)
-target_link_libraries(sudoku_test ${Boost_FILESYSTEM_LIBRARY} ${Boost_SYSTEM_LIBRARY} ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
+# Gather the header and source files
+#file(GLOB_RECURSE INC_FILES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} *.hpp)
+#file(GLOB_RECURSE SRC_FILES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} *.cpp)
+
+# Gather all sources except the main entry point
+file(GLOB_RECURSE INC_FILES src/*/*.h)
+file(GLOB_RECURSE SRC_FILES src/*/*.cpp)
+
+# Build object files for reuse (e.g. in test)
+#ADD_LIBRARY(demo_objects OBJECT ${INC_FILES} ${SRC_FILES})
+
+# Dependencies
+find_package(Boost COMPONENTS filesystem system unit_test_framework REQUIRED)
+
+# Unit tests
+add_subdirectory(test)
+
+# Assign the include directories
+include_directories(${Boost_INCLUDE_DIRS})
+
+# Build
+#set(SOURCE_FILES src/main.cpp $<TARGET_OBJECTS:demo_objects>)
+set(SOURCE_FILES src/main.cpp ${INC_FILES} ${SRC_FILES})
+add_executable(sudoku-solver ${SOURCE_FILES})
+target_link_libraries(sudoku-solver ${Boost_LIBRARIES})
