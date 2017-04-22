@@ -93,3 +93,17 @@ std::vector<uint8_t> Sudoku::possibilities(const Index& index) const {
     }
     return ret;
 }
+
+
+bool Sudoku::operator ==(const Sudoku& val) const {
+    for (size_t i = 0; i < _fields.size(); ++i) {
+        if (_fields[i] != val.field(i / 9, i % 9)) {
+            return false;
+        }
+    }
+    return true;
+}
+
+bool Sudoku::operator !=(const Sudoku& val) const {
+    return !(*this == val);
+}

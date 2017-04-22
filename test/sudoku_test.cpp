@@ -124,4 +124,21 @@ BOOST_AUTO_TEST_CASE(possibilities) {
 
 }
 
+BOOST_AUTO_TEST_CASE(equality) {
+    Sudoku b;
+    Sudoku c;
+    BOOST_CHECK_EQUAL(b == c, true);
+    std::array<uint8_t, 81> field;
+
+    for (uint8_t i = 0; i < field.size(); ++i) {
+        field[i] = i;
+    }
+    Sudoku d{field};
+    BOOST_CHECK_EQUAL(b != d, true);
+    BOOST_CHECK_EQUAL(d == d, true);
+
+
+
+}
+
 BOOST_AUTO_TEST_SUITE_END()

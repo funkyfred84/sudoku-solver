@@ -8,7 +8,7 @@ rm -rf bin
 mkdir build
 
 cd build
-cmake ..
-make
+LANG=C cmake ..
+LANG=C make
 cd test
-ctest
+LANG=C ctest

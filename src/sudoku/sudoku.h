@@ -24,6 +24,8 @@ public:
     void field(const Index& index, const uint8_t value);
     Index next();
     std::vector<uint8_t> possibilities(const Index& index) const;
+    bool operator==(const Sudoku& val) const;
+    bool operator !=(const Sudoku& val) const;
 private:
     std::array<uint8_t, 81> _fields;
 };
