@@ -107,3 +107,13 @@ bool Sudoku::operator ==(const Sudoku& val) const {
 bool Sudoku::operator !=(const Sudoku& val) const {
     return !(*this == val);
 }
+
+std::ostream& operator<<(std::ostream& out, Sudoku& sudoku) {
+    for (size_t row = 0; row < 9; ++row) {
+        for (size_t column = 0; column < 9; ++column) {
+            out << (int)(sudoku.field(row, column)) << ' ';
+        }
+        out << '\n';
+    }
+    return out;
+}

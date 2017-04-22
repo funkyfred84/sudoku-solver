@@ -3,6 +3,7 @@
 #include <array>
 #include <stdint.h>
 #include <vector>
+#include <iostream>
 
 class Index {
 public:
@@ -29,5 +30,7 @@ public:
 private:
     std::array<uint8_t, 81> _fields;
 };
+
+std::ostream& operator<<(std::ostream& out, Sudoku& sudoku);
 
 #endif // SUDOKU_H

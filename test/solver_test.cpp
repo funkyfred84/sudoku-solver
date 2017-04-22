@@ -1,10 +1,21 @@
+#ifdef STAND_ALONE
+#   define BOOST_TEST_MODULE sudoku_test
+#endif
+
+#include <boost/test/unit_test.hpp>
+
+#include "../src/sudoku/sudoku.h"
+#include <array>
+#include <stdint.h>
+#include "../src/sudoku/solver.h"
 #include <iostream>
-#include "sudoku/solver.h"
-#include "sudoku/sudoku.h"
 
-using namespace std;
 
-int main(int argc, char* argv[]) {
+
+BOOST_AUTO_TEST_SUITE(sudoku_test)
+
+BOOST_AUTO_TEST_CASE(solve_first)
+{
     std::array<uint8_t, 81> field{4, 0, 0, 6, 0, 0, 8, 7, 0,
                                   1, 0, 0, 0, 0, 0, 4, 5, 0,
                                   0, 7, 0, 0, 8, 0, 0, 0, 3,
@@ -17,7 +28,6 @@ int main(int argc, char* argv[]) {
 
     Sudoku a{field};
     Sudoku b = solve(a);
-
 
     std::array<uint8_t, 81> field2{4, 5, 3, 6, 2, 1, 8, 7, 9,
                                    1, 6, 8, 9, 7, 3, 4, 5, 2,
@@ -32,4 +42,8 @@ int main(int argc, char* argv[]) {
     std::cout << c << std::endl;
 
     std::cout << b << std::endl;
+    BOOST_CHECK_EQUAL(c == b, true);
+
 }
+
+BOOST_AUTO_TEST_SUITE_END()
